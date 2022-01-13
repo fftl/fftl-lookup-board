@@ -1,6 +1,7 @@
 package fftl.lookupBoard.entitiy;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity(name = "Users")
+@Builder
 public class User {
     //유저는 굳이 인증까지는 할 필요는 없이 username만을 가지도록 하였습니다.
     @Id

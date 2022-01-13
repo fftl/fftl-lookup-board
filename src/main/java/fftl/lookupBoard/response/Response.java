@@ -1,5 +1,8 @@
 package fftl.lookupBoard.response;
 
+import lombok.Getter;
+
+@Getter
 public class Response<T> {
 
     private boolean success;
