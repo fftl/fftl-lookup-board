@@ -18,6 +18,8 @@ import java.awt.*;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @ExtendWith(SpringExtension.class)
@@ -48,6 +50,9 @@ class UserControllerTest {
             .param("username","fftl")
         );
 
-        actions.andDo(print());
+        actions.andExpect(status().isOk())
+            .andExpect(jsonPath("success").value(true))
+            .andExpect(jsonPath("message").doesNotExist())
+            .andDo(print());
     }
 }
