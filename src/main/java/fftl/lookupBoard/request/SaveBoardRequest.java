@@ -1,12 +1,33 @@
 package fftl.lookupBoard.request;
 
+import fftl.lookupBoard.entity.Board;
+import fftl.lookupBoard.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.time.LocalDateTime;
+
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 public class SaveBoardRequest {
 
+    private String title;
+    private String content;
+    private LocalDateTime regdate;
+    private Long user_id;
+    private User user;
+
+    public Board toEntity(){
+        return Board.builder()
+            .title(title)
+            .content(content)
+            .regdate(regdate)
+            .searchCnt(0)
+            .user(user)
+            .build();
+    }
 }

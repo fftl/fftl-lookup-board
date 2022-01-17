@@ -1,12 +1,12 @@
 package fftl.lookupBoard.service;
 
-import fftl.lookupBoard.entitiy.User;
+import fftl.lookupBoard.entity.User;
 import fftl.lookupBoard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -32,4 +32,10 @@ public class UserService {
         return user;
     }
 
+    @Transactional
+    public List<User> findAll(){
+        List<User> users = userRepository.findAll();
+
+        return users;
+    }
 }

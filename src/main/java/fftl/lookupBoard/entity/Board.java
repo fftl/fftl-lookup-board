@@ -1,8 +1,13 @@
-package fftl.lookupBoard.entitiy;
+package fftl.lookupBoard.entity;
+
+import lombok.Builder;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Getter
+@Builder
 @Entity(name = "Boards")
 public class Board {
 
