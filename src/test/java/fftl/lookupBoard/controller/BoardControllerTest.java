@@ -1,5 +1,6 @@
 package fftl.lookupBoard.controller;
 
+import fftl.lookupBoard.advice.AdviceController;
 import fftl.lookupBoard.service.BoardService;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,7 @@ class BoardControllerTest {
     public void setMvc(MockMvc mvc){
         this.mvc = MockMvcBuilders.standaloneSetup(new BoardController(boardService))
             .addFilters(new CharacterEncodingFilter("UTF-8", true))
+            .setControllerAdvice(AdviceController.class)
             .build();
     }
 
@@ -40,13 +42,13 @@ class BoardControllerTest {
         JSONObject object = new JSONObject()
             .put("title", "제목입니다.")
             .put("content", "내용입니다.")
-            .put("regdate", "2022-01-17 11:11:11")
-            .put("user_id","1");
+            .put("regdate", "2022-01-17T11:11:11")
+            .put("user_id",1);
 
         ResultActions action = mvc.perform(
             post("/board")
                 .contentType(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(String.valueOf(object)));
 
