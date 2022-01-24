@@ -57,8 +57,8 @@ class UserControllerTest {
         );
 
         actions.andExpect(status().isOk())
-            .andExpect(jsonPath("success").value(true))
-            .andExpect(jsonPath("message").doesNotExist())
+            .andExpect(jsonPath("$.success").value(true))
+            .andExpect(jsonPath("$.message").doesNotExist())
             .andDo(print());
     }
 
@@ -75,8 +75,8 @@ class UserControllerTest {
 
         actions
             .andExpect(status().isOk())
-            .andExpect(jsonPath("success").value(true))
-            .andExpect(jsonPath("message").doesNotExist())
+            .andExpect(jsonPath("$.success").value(true))
+            .andExpect(jsonPath("$.message").doesNotExist())
             .andDo(print()
             );
     }
@@ -94,8 +94,8 @@ class UserControllerTest {
         );
 
         actions
-            .andExpect(jsonPath("success").value(true))
-            .andExpect(jsonPath("message").doesNotExist())
+            .andExpect(jsonPath("$.success").value(true))
+            .andExpect(jsonPath("$.message").doesNotExist())
             .andDo(print());
     }
 }

@@ -1,11 +1,15 @@
 package fftl.lookupBoard.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Builder
 @Entity(name = "Boards")
@@ -31,4 +35,9 @@ public class Board {
     @ManyToOne
     @JoinColumn(name = "users_id")
     private User user;
+
+    public void searchCntUp(){
+        this.searchCnt += 1;
+    }
 }
+

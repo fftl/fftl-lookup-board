@@ -27,12 +27,13 @@ public class BoardService {
         return boardRepository.save(saveBoardRequest.toEntity());
     }
 
+    @Transactional //조회수 증가 기능 때문에 읽기전용이 아니게됩니다.
     public Board findById(Long id){
         Board board = boardRepository.findById(id).orElse(null);
         if(board == null){
             throw new RuntimeException("해당 게시글을 찾을 수 없습니다.");
         }
-
+        board.searchCntUp();
         return board;
     }
 
@@ -44,5 +45,4 @@ public class BoardService {
 
         return boards;
     }
-
 }

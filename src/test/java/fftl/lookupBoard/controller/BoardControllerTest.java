@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -62,6 +63,56 @@ class BoardControllerTest {
         action
             .andDo(print())
             .andExpect(status().isOk())
-            .andExpect(jsonPath("success").value(true));
+            .andExpect(jsonPath("$.success").value(true));
+    }
+
+    @DisplayName("한개 조회하기 테스트")
+    @Order(2)
+    @Test
+    void findById() throws Exception{
+        //조회할 때 마다 조회수가 올라가는 것도 확인 완료
+
+        ResultActions action1 = mvc.perform(
+            get("/board/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8"));
+
+        action1
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.success").value(true))
+            .andExpect(jsonPath("$.data.searchCnt").value(1))
+        ;
+
+        ResultActions action2 = mvc.perform(
+            get("/board/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8"));
+
+        action2
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.success").value(true))
+            .andExpect(jsonPath("$.data.searchCnt").value(2));
+    }
+
+    @DisplayName("여러개 조회하기 테스트")
+    @Order(3)
+    @Test
+    void findAll() throws Exception{
+
+        ResultActions action = mvc.perform(
+            get("/board")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8"));
+
+        action
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.success").value(true))
+            .andExpect(jsonPath("$.data").exists());
     }
 }
