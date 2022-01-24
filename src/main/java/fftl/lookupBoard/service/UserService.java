@@ -4,10 +4,11 @@ import fftl.lookupBoard.entity.User;
 import fftl.lookupBoard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -21,7 +22,6 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    @Transactional
     public User findById(Long id){
         User user = userRepository.findById(id).orElse(null);
 
@@ -32,7 +32,6 @@ public class UserService {
         return user;
     }
 
-    @Transactional
     public List<User> findAll(){
         List<User> users = userRepository.findAll();
 

@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class BoardService {
@@ -22,6 +25,24 @@ public class BoardService {
         saveBoardRequest.setUser(user);
 
         return boardRepository.save(saveBoardRequest.toEntity());
+    }
+
+    public Board findById(Long id){
+        Board board = boardRepository.findById(id).orElse(null);
+        if(board == null){
+            throw new RuntimeException("해당 게시글을 찾을 수 없습니다.");
+        }
+
+        return board;
+    }
+
+    public List<Board> findAll(){
+        List<Board> boards = boardRepository.findAll();
+        if(boards == null){
+            throw new RuntimeException("작성된 게시글이 하나도 없습니다.");
+        }
+
+        return boards;
     }
 
 }

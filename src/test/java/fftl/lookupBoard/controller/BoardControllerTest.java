@@ -3,7 +3,7 @@ package fftl.lookupBoard.controller;
 import fftl.lookupBoard.advice.AdviceController;
 import fftl.lookupBoard.service.BoardService;
 import org.json.JSONObject;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -13,11 +13,16 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
+@Transactional
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -37,6 +42,8 @@ class BoardControllerTest {
             .build();
     }
 
+    @DisplayName("저장하기 테스트")
+    @Order(1)
     @Test
     void save() throws Exception{
         JSONObject object = new JSONObject()
@@ -53,10 +60,8 @@ class BoardControllerTest {
                 .content(String.valueOf(object)));
 
         action
-            .andDo(print());
-//            .andExpect(status().isOk())
-//            .andExpect(jsonPath("success").value(true));
-
-
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("success").value(true));
     }
 }
