@@ -2,10 +2,13 @@ package fftl.lookupBoard.service;
 
 import fftl.lookupBoard.entity.User;
 import fftl.lookupBoard.repository.UserRepository;
+import fftl.lookupBoard.response.UserResponse;
+import jdk.jshell.execution.Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Transactional(readOnly = true)
@@ -14,27 +17,44 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final Utils utils;
 
     @Transactional
-    public User save(String username){
-        User user = User.builder().username(username).build();
+    public UserResponse save(String username){
+        User user = userRepository.save(User.builder().username(username).build());
 
-        return userRepository.save(user);
+        return utils.convertUserResponse(user);
     }
 
-    public User findById(Long id){
+    public UserResponse findById(Long id){
         User user = userRepository.findById(id).orElse(null);
 
         if(user == null) {
             throw new RuntimeException("올바르지 않은 id 입니다.");
         }
 
-        return user;
+        return utils.convertUserResponse(user);
     }
 
-    public List<User> findAll(){
+    public List<UserResponse> findAll(){
         List<User> users = userRepository.findAll();
 
-        return users;
+        if(users == null) {
+            throw new RuntimeException("올바르지 않은 id 입니다.");
+        }
+
+        List<UserResponse> userResponses = new ArrayList<>();
+
+        for(User user : users){
+            userResponses.add(UserResponse.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .boardResponses(utils.convertBoardsResponses(user.getBoards()))
+                .build());
+        }
+
+        return userResponses;
     }
+
+
 }

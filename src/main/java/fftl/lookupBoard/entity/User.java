@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,6 +15,7 @@ import javax.persistence.*;
 @Entity(name = "Users")
 @Builder
 public class User {
+
     //유저는 굳이 인증까지는 할 필요는 없이 username만을 가지도록 하였습니다.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +24,7 @@ public class User {
 
     @Column(name = "users_username")
     private String username;
+
+    @OneToMany(mappedBy = "user")
+    private List<Board> boards = new ArrayList<>();
 }

@@ -32,12 +32,20 @@ public class Board {
     @Column(name = "boards_search_cnt")
     private int searchCnt;
 
+    @Column(name = "boards_delete_yn")
+    @GeneratedValue
+    private boolean deleteYn;
+
     @ManyToOne
     @JoinColumn(name = "users_id")
     private User user;
 
     public void searchCntUp(){
         this.searchCnt += 1;
+    }
+
+    public void deleteY(){
+        this.deleteYn = true;
     }
 }
 

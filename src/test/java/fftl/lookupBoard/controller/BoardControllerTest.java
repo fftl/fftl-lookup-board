@@ -71,9 +71,8 @@ class BoardControllerTest {
     @Test
     void findById() throws Exception{
         //조회할 때 마다 조회수가 올라가는 것도 확인 완료
-
         ResultActions action1 = mvc.perform(
-            get("/board/1")
+            get("/board/id/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8"));
@@ -86,7 +85,7 @@ class BoardControllerTest {
         ;
 
         ResultActions action2 = mvc.perform(
-            get("/board/1")
+            get("/board/id/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8"));
@@ -98,7 +97,7 @@ class BoardControllerTest {
             .andExpect(jsonPath("$.data.searchCnt").value(2));
     }
 
-    @DisplayName("여러개 조회하기 테스트")
+    @DisplayName("모두 조회하기 테스트")
     @Order(3)
     @Test
     void findAll() throws Exception{
@@ -108,6 +107,103 @@ class BoardControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8"));
+
+        action
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.success").value(true))
+            .andExpect(jsonPath("$.data").exists())
+            .andExpect(jsonPath("$.data.length()").value(6));
+    }
+
+    @DisplayName("제목으로 조회하기 테스트")
+    @Order(4)
+    @Test
+    void findByTitle() throws Exception{
+
+        ResultActions action = mvc.perform(
+            get("/board/title/치킨")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8"));
+
+        action
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.success").value(true))
+            .andExpect(jsonPath("$.data").exists())
+            .andExpect(jsonPath("$.data.length()").value(2));
+    }
+
+    @DisplayName("내용으로 조회하기 테스트")
+    @Order(5)
+    @Test
+    void findByContent() throws Exception{
+
+        ResultActions action = mvc.perform(
+            get("/board/content/또먹고싶네")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8"));
+
+        action
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.success").value(true))
+            .andExpect(jsonPath("$.data").exists())
+            .andExpect(jsonPath("$.data.length()").value(3));
+    }
+
+    @DisplayName("제목이나 내용으로 조회하기 테스트")
+    @Order(6)
+    @Test
+    void findByTitleContent() throws Exception{
+
+        ResultActions action = mvc.perform(
+            get("/board/titleContent/치킨")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8"));
+
+        action
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.success").value(true))
+            .andExpect(jsonPath("$.data").exists())
+            .andExpect(jsonPath("$.data.length()").value(3));
+    }
+
+    @DisplayName("유저이름으로 테스트")
+    @Order(7)
+    @Test
+    void findByUsername() throws Exception{
+
+        ResultActions action = mvc.perform(
+            get("/board/username/홍길동")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8"));
+
+        action
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.success").value(true))
+            .andExpect(jsonPath("$.data").exists())
+            .andExpect(jsonPath("$.data.length()").value(2));
+    }
+
+    @DisplayName("날짜범위로 조회 테스트")
+    @Order(8)
+    @Test
+    void findByDates() throws Exception{
+
+        ResultActions action = mvc.perform(
+            get("/board/regdate")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .param("startDate", "2022-01-25T01:11:11")
+                .param("endDate", "2022-01-31T11:11:11"));
 
         action
             .andDo(print())

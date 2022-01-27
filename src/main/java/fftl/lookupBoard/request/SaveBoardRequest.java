@@ -27,6 +27,7 @@ public class SaveBoardRequest {
             .content(content)
             .regdate(regdate)
             .searchCnt(0)
+            .deleteYn(false)
             .user(user)
             .build();
     }
