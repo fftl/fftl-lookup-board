@@ -8,6 +8,7 @@ class LookupBoardApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

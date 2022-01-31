@@ -47,5 +47,18 @@ public class Board {
     public void deleteY(){
         this.deleteYn = true;
     }
+
+    @Override
+    public String toString() {
+        return "Board{" +
+            "id=" + id +
+            ", title='" + title + '\'' +
+            ", content='" + content + '\'' +
+            ", regdate=" + regdate +
+            ", searchCnt=" + searchCnt +
+            ", deleteYn=" + deleteYn +
+            ", user=" + user +
+            '}';
+    }
 }
 

@@ -20,9 +20,7 @@ public class BoardController {
 
     @PostMapping
     public Response save(@RequestBody SaveBoardRequest saveBoardRequest){
-        Board board = boardService.save(saveBoardRequest);
-
-        return new Response(true, null, board);
+        return new Response(true, null, boardService.save(saveBoardRequest));
     }
 
     /**
@@ -63,6 +61,14 @@ public class BoardController {
     @GetMapping("/titleContent/{titleContent}")
     public Response findByTitleContent(@PathVariable String titleContent){
         return new Response(true, null, boardService.findByTitleContent(titleContent));
+    }
+
+    /**
+     * 유저이름으로 조회
+     * */
+    @GetMapping("/username/{username}")
+    public Response findByUsername(@PathVariable String username){
+        return new Response(true, null, boardService.findByUsername(username));
     }
 
     /**

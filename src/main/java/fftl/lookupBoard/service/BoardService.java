@@ -27,11 +27,21 @@ public class BoardService {
      * 게시글 저장하기
      * */
     @Transactional
-    public Board save(SaveBoardRequest saveBoardRequest){
+    public BoardResponse save(SaveBoardRequest saveBoardRequest){
         User user = userRepository.findById(saveBoardRequest.getUser_id()).orElse(null);
         saveBoardRequest.setUser(user);
+        Board board = boardRepository.save(saveBoardRequest.toEntity());
 
-        return boardRepository.save(saveBoardRequest.toEntity());
+        BoardResponse boardResponse = BoardResponse.builder()
+        .title(board.getTitle())
+        .content(board.getContent())
+        .regdate(board.getRegdate())
+        .username(board.getUser().getUsername())
+        .searchCnt(board.getSearchCnt())
+        .id(board.getId())
+        .build();
+
+        return boardResponse;
     }
 
     /**

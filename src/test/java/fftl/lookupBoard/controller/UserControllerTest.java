@@ -22,7 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Transactional
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class) //테스트 메소드 순서 설정
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -75,9 +74,9 @@ class UserControllerTest {
         );
 
         actions
-//            .andExpect(status().isOk())
-//            .andExpect(jsonPath("$.success").value(true))
-//            .andExpect(jsonPath("$.message").doesNotExist())
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.success").value(true))
+            .andExpect(jsonPath("$.message").doesNotExist())
             .andDo(print()
             );
     }

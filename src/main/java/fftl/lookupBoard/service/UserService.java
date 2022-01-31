@@ -3,7 +3,6 @@ package fftl.lookupBoard.service;
 import fftl.lookupBoard.entity.User;
 import fftl.lookupBoard.repository.UserRepository;
 import fftl.lookupBoard.response.UserResponse;
-import jdk.jshell.execution.Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +20,9 @@ public class UserService {
 
     @Transactional
     public UserResponse save(String username){
-        User user = userRepository.save(User.builder().username(username).build());
-
+        User user = userRepository.save(User.builder()
+            .username(username)
+            .build());
         return utils.convertUserResponse(user);
     }
 
@@ -55,6 +55,5 @@ public class UserService {
 
         return userResponses;
     }
-
 
 }

@@ -2,6 +2,7 @@ package fftl.lookupBoard.controller;
 
 import fftl.lookupBoard.entity.User;
 import fftl.lookupBoard.response.Response;
+import fftl.lookupBoard.response.UserResponse;
 import fftl.lookupBoard.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

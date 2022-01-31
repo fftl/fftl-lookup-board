@@ -27,4 +27,13 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Board> boards = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "User{" +
+            "id=" + id +
+            ", username='" + username + '\'' +
+            ", boards=" + boards +
+            '}';
+    }
 }

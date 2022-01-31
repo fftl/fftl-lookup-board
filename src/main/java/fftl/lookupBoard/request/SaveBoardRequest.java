@@ -31,4 +31,15 @@ public class SaveBoardRequest {
             .user(user)
             .build();
     }
+
+    @Override
+    public String toString() {
+        return "SaveBoardRequest{" +
+            "title='" + title + '\'' +
+            ", content='" + content + '\'' +
+            ", regdate=" + regdate +
+            ", user_id=" + user_id +
+            ", user=" + user +
+            '}';
+    }
 }

@@ -4,12 +4,12 @@ import fftl.lookupBoard.entity.Board;
 import fftl.lookupBoard.entity.User;
 import fftl.lookupBoard.response.BoardResponse;
 import fftl.lookupBoard.response.UserResponse;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Component
 public class Utils {
 
     public UserResponse convertUserResponse(User user){
@@ -21,8 +21,12 @@ public class Utils {
     }
 
     public List<BoardResponse> convertBoardsResponses(List<Board> boards){
-        List<BoardResponse> boardResponses = new ArrayList<>();
 
+        if(boards == null){
+            return null;
+        }
+
+        List<BoardResponse> boardResponses = new ArrayList<>();
         for( Board board : boards ){
             if(!board.isDeleteYn()){
                 boardResponses.add(BoardResponse.builder()
@@ -35,7 +39,6 @@ public class Utils {
                     .build());
             }
         }
-
         return boardResponses;
     }
 }
